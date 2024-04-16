@@ -34,4 +34,18 @@ export class UserController {
 
     }
 
+    deleteUser = (request: Request, response: Response) => {
+
+        const email = request.body.email
+
+        if(!email){
+            return response.status(400).json({message: 'E-mail must be informed'})
+        }
+
+        this.userService.deleteUser(email)
+
+        return response.status(200)
+            .json({ message : 'usuario deletado' })
+    }
+
 }

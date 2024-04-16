@@ -30,7 +30,12 @@ export class UserService {
     }
 
     getUsers = () => {
-        return db
+        return this.db
+    }
+
+    deleteUser = (email: string) => {
+        this.db = this.db.filter(e => e.email !== email)
+        console.log('DB apos delecao', this.db)
     }
 
 }

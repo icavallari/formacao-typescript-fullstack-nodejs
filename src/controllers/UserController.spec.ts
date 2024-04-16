@@ -8,7 +8,8 @@ import { UserController } from "./UserController"
 describe('UserController', () => {
 
     const mockUserService: Partial<UserService> = {
-        createUser: jest.fn()
+        createUser: jest.fn(),
+        deleteUser: jest.fn()
     }
     const userController = new UserController(mockUserService as UserService)    
 
@@ -25,6 +26,42 @@ describe('UserController', () => {
         userController.createUser(mockRequest, mockResponse)
         expect(mockResponse.state.status).toBe(201)
         expect(mockResponse.state.json).toMatchObject({message: 'usuario criado'})
+    })
+
+    it('Deve não remover usuario por falta do email', () => {
+
+        const mockRequest = {
+            body: {
+                email: ''
+            }
+        } as Request
+
+        const mockResponse = makeMockResponse()
+
+        userController.deleteUser(mockRequest, mockResponse)
+        expect(mockResponse.state.status).toBe(400)
+        expect(mockResponse.state.json).toMatchObject({
+            message: 'E-mail must be informed',
+        })
+
+    })
+
+    it('Deve remover usuario', () => {
+
+        const mockRequest = {
+            body: {
+                email: 'icavallari@hotmail.com'
+            }
+        } as Request
+
+        const mockResponse = makeMockResponse()
+
+        userController.deleteUser(mockRequest, mockResponse)
+        expect(mockResponse.state.status).toBe(200)
+        expect(mockResponse.state.json).toMatchObject({
+            message : 'usuario deletado'
+        })
+
     })
 
 })
