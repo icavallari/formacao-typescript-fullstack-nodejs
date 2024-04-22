@@ -1,4 +1,5 @@
-import express, { Request, Response, json} from 'express'
+import express, { Request, Response } from 'express'
+import "reflect-metadata"
 import { router } from './routes'
 
 const server = express()
