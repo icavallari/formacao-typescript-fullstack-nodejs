@@ -29,7 +29,7 @@ export class UserController {
 
     getUser = async (request: Request, response: Response) => {
 
-        const userId = request.params.userId
+        const { userId } = request.params
         const user = await this.userService.getUser(userId)
         return response.status(200)
             .json(user)
